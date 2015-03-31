@@ -1,7 +1,9 @@
 import Graphics.Element (..)
-import Signal (Signal, map, foldp)
+import Graphics.Collage (..)
+import Signal (Signal, map, foldp, Channel, channel, (<~), (~))
 import Keyboard
-import String, Text
+import String
+import Text (asText)
 import Window
 
 type alias Presentation = { currentSlide : Int, allSlides : List Slide }
@@ -18,14 +20,13 @@ type SlideChange = StartOver | Prev | Next
 updateSlide : Channel SlideChange
 updateSlide = channel StartOver
 
+view (w, h) keyboard = 
+  container w h middle (
+    flow down [
+      asText "Hey, mom!",
+      asText keyboard
+    ]
+  )
 
-{-
 main : Signal Element
-main =
-  map asText countClick
-
-
-countClick : Signal Int
-countClick =
-  foldp (\clk count -> count + 1) 0 Mouse.clicks
--}
+main = view <~ Window.dimensions ~ Keyboard.arrows
