@@ -3,7 +3,7 @@ import Graphics.Collage (..)
 import Signal (Signal, map, foldp, Channel, channel, (<~), (~))
 import Keyboard
 import String
-import Text (asText, style, fromString, centered)
+import Text (asText, style, fromString, centered, Style)
 import Window
 import Color (..)
 
@@ -25,28 +25,42 @@ updateSlide = channel StartOver
 view (w, h) pres = 
   color grey (    
     container w h middle (
-      flow down [
-        --collage (w//2) (h//2) [ (filled yellow (rect (toFloat w/2) (toFloat h/2))) ],
-        headerText (w,h),
-        asText "Hey, mom!",
-        asText pres.currentSlide
+      flow down
+      [ headerText (w,h) "Hey, mom!"
+      , asText "Hey, mom!"
+      , asText pres.currentSlide
       ]
     )
   )
 
+headerStyle : Style
 headerStyle = 
   { typeface = [ "Helvetica", "sans-serif" ]
-  , height   = Just 24
+  , height   = Just 48
   , color    = black
   , bold     = True
   , italic   = False
+  , line     = Nothing
   }
 
-headerText (w,h) =
-  collage (round ((toFloat w)/1.25)) (h//9) [
-    (filled yellow (rect ((toFloat w)/1.25) (toFloat h/9))),
-    centered (style headerStyle (fromString "Header text yo"))
-  ]
+headerText : (Int,Int) -> String -> Element
+headerText (w,h) string =
+  let viewText str = centered (style headerStyle (fromString str))
+      w' = round ((toFloat w) / 1.25)
+      h' = h // 9
+      nurect = collage w' h'
+        [ rect (toFloat w') (toFloat h') |> filled yellow ]
+  in
+    container w' h' midTop (
+      flow outward
+        [ nurect
+        , viewText string
+        ]
+    )
+
+positionElement : Element -> Element
+positionElement elem =
+  container 300 300 midTop elem
 
 basePresent : Presentation
 basePresent = { currentSlide = 0, allSlides = [] }
