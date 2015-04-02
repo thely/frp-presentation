@@ -1,3 +1,5 @@
+--Slideshow-style code! Unfinished.
+
 import Graphics.Element (..)
 import Graphics.Collage (..)
 import Signal (Signal, map, foldp, Channel, channel, (<~), (~))
