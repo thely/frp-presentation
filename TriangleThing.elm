@@ -6,6 +6,7 @@ import Graphics.Element (..)
 import Color (..)
 import Text (asText)
 
+scene : (Int,Int) (Int,Int) -> Element
 scene (x,y) (w,h) = 
   let (dx, dy) = (toFloat x - toFloat w / 2, toFloat h / 2 - toFloat y)
   in collage w h
@@ -20,4 +21,5 @@ scene (x,y) (w,h) =
     , toForm (asText (dx, dy)) |> move (0, 30)
     ]
 
+main : Signal Element
 main = scene <~ Mouse.position ~ Window.dimensions

@@ -30,4 +30,5 @@ bar (index, n) =
     , asText n 
     ]
 
+main : Element
 main = flow down <| map bar (fibonacciWithIndexes 10)

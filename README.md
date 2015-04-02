@@ -14,3 +14,6 @@ Basic mapping and recursion, plus visuals.
 
 ### TriangleThing
 "Sweet rave triangle" was its first description. Rolls with changing window sizes. Mouse position changes the color, rotation, & scale of the triangle, and the position of the octagon.
+
+### base
+I was going to try to be super nerdy and write what would run the slideshow in Elm itself, but I didn't have enough time. Rife with graphical struggles.

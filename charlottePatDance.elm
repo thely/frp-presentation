@@ -9,6 +9,7 @@ main = view <~ timeNext
 
 timeNext : Signal Time
 timeNext = map (inSeconds << fst) (timestamp (fps 25))
+--makes a timestamp every frame; the Time is returned in seconds.
 
 view : Float -> Element
 view t = flow outward [ leftRightCharlotte t, upDownPat t ]
@@ -16,8 +17,10 @@ view t = flow outward [ leftRightCharlotte t, upDownPat t ]
 
 
 leftRightCharlotte t = moveImg (wiggle t) 0 charlotte
-upDownPat t = moveImg 0 (waggle t) pat
-charlottePatDance t = hvDance charlotte pat t
+upDownPat t          = moveImg 0 (waggle t) pat
+
+charlottePatDance t  = hvDance charlotte pat t
+
 charlottePatDoubleDance t = 
   let cpd = toForm (charlottePatDance t)
   in hvDance cpd cpd t

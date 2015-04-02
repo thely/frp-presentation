@@ -37,11 +37,13 @@ updateChan : Channel Command
 updateChan = channel StartOver
 
 --Build the deck
+allCards : List Int -> List Char -> List Card
 allCards faces suits =
   case suits of
     x :: xs -> family faces x ++ allCards faces xs
     _ -> []
 
+family : List Int -> Char -> List Card
 family faces suit =
   case faces of
     x :: xs -> 
